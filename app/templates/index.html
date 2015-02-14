@@ -4,9 +4,17 @@
 {% block content %}
     <h1>Hi, {{ user.nickname }}!</h1>
     {% for test in test %}
-    <p>
+    
+    
+
+<p>
       {{ test.author.nickname }} created: <b>{{ test.title }}</b>
       about: {{ test.description }}
-    </p>
+   </p>
     {% endfor %}
 {% endblock %}
+<!-- <form method="POST" action="/" name='Create Quiz'>
+	    {{ form.hidden_tag() }}
+	    {{ form.title.label }} {{ form.title(size=60) }}
+	    <input type="submit" value="Go">
+	</form> -->

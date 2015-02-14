@@ -8,18 +8,21 @@ class LoginForm(Form):
     remember_me = BooleanField('remember_me', default=False)
 
 class TestCreateForm(Form):
-    title = StringField('', validators=[DataRequired()])
-    description = StringField('', validators=[DataRequired()])
+    title = StringField('title', validators=[DataRequired()])
+    description = StringField('description', validators=[DataRequired()])
     
 class QuestionCreateForm(Form):
-    question = StringField('', validators=[DataRequired()])
-    answerone = StringField('', validators=[DataRequired()])
-    answertwo = StringField('', validators=[DataRequired()])
-    answerthree = StringField('', validators=[DataRequired()])
-    answerfour = StringField('', validators=[DataRequired()])
+    question = StringField('question', validators=[DataRequired()])
+    answerone = StringField('answerone', validators=[DataRequired()])
+    answertwo = StringField('answertwo', validators=[DataRequired()])
+    answerthree = StringField('answerthree', validators=[DataRequired()])
+    answerfour = StringField('answerfour', validators=[DataRequired()])
+
+class TestTakeGetForm(Form):
+    testid = StringField('testid', validators=[DataRequired()])
 
 class TestTakeForm(Form):
-    openid = StringField('openid', validators=[DataRequired()])
-    remember_me = BooleanField('remember_me', default=False)
+	answerselect = StringField('answerone', validators=[DataRequired()])
+ 
 
 
