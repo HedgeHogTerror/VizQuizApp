@@ -1,0 +1,12 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hi, {{ user.nickname }}!</h1>
+    {% for test in test %}
+    <p>
+      {{ test.author.nickname }} created: <b>{{ test.title }}</b>
+      about: {{ test.description }}
+    </p>
+    {% endfor %}
+{% endblock %}
