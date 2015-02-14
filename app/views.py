@@ -4,6 +4,9 @@ from flask.ext.login import login_user, logout_user, current_user, \
 from app import app, db, lm, oid
 from .forms import LoginForm, TestCreateForm, QuestionCreateForm, TestTakeForm
 from .models import User, Test, Question
+import time
+import datetime
+
 
 # loads user from db
 @lm.user_loader
@@ -47,12 +50,19 @@ def testcreate():
 @app.route('/index', methods=['GET', 'POST'] )
 @login_required
 def index():
-    user = g.user
+    user = g.user.id
 
     form = TestCreateForm()
     if form.validate_on_submit():
-        print form.title
-        # db.session.add(test)
+
+        title = request.form['title']
+        description = request.form['description']
+        ts = time.time()
+        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+        u = models.Test(title=title, description=description, timestamp=timestamp, user_id=user)
+        db.session.add(u)
+        db.session.commit()
+        
         # db.session.commit()
         return redirect('/testcreate')
     
