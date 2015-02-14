@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class='row'> 
+	<div class='col-md-8'></div>
+	<div class='col-md-4'>
+	<h1>Hi, {{ user.nickname }}!</h1>
+	</div>
+	
+
+   
+    {% for test in test %}
+    <div class='col-md-2'>
+    <p>
+      {{ test.author.nickname }} created: <b>{{ test.title }}</b>
+      about: {{ test.description }}
+   </p>
+   	</div>
+    {% endfor %}
+ </div>
+
+	<form method="post" action="" name="testcreate">
+	<p>{{ form.hidden_tag() }}
+		<h3>Question:</h3>
+	    {{ form.question(size=200) }}
+	    <h3>Video URL:</h3>
+	    {{ form.videourl(size=200) }}
+	    <h3>Answer One:</h3>
+	    {{ form.answerone(size=200) }}
+	    <h3>Answer two:</h3>
+	    {{ form.answertwo(size=200) }}
+	    <h3>Answer Three:</h3>
+	    {{ form.answerthree(size=200) }}
+	    <h3>Answer Four:</h3>
+	    {{ form.answerfour(size=200) }}</p>
+	    
+	    <input type="submit" class="btn btn-primary btn-lg btn-block" value='Create Question'>
+
+	</form>
+
+	<a href="{{ url_for('index') }}" class="btn btn-primary btn-lg btn-block">Done</a>
+{% endblock %}

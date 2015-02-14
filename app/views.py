@@ -3,30 +3,61 @@ from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 from app import app, db, lm, oid
 from .forms import LoginForm, TestCreateForm, QuestionCreateForm, TestTakeForm
-from .models import User
+from .models import User, Test, Question
 
-
+# loads user from db
 @lm.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
 
 @app.before_request
 def before_request():
     g.user = current_user
 
+# Method for posting test questions to db
+@app.route('/testcreate', methods=['GET', 'POST'] )
+def testcreate():
+    user = g.user
 
-@app.route('/')
-@app.route('/index',methods=['GET', 'POST'] )
+    form = QuestionCreateForm()
+    if form.validate_on_submit():
+        return redirect('/testcreate')
+    
+# test is a place holder for the real db values
+# test = Test.
+    test = [
+        {
+            'author': {'nickname': 'John'},
+            'title' : 'A quiz',
+            'description': 'About dinosaurs!'
+        },
+        {
+            'author': {'nickname': 'Susan'},
+            'title' : 'a test',
+            'description': 'in thermodynamics :(...'
+        }
+    ]
+    return render_template('testcreate.html',
+                           title='Home',
+                           user=user,
+                           test=test,
+                           form=form)    
+
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'] )
 @login_required
 def index():
     user = g.user
 
-    # form = TestCreateForm()
-    # if form.validate_on_submit():
-    #     return redirect('/success')
-    # return render_template('index.html', form=form)
-
+    form = TestCreateForm()
+    if form.validate_on_submit():
+        print form.title
+        # db.session.add(test)
+        # db.session.commit()
+        return redirect('/testcreate')
+    
+# test is a place holder for the real db values
+# test = Test.
     test = [
         {
             'author': {'nickname': 'John'},
@@ -42,7 +73,8 @@ def index():
     return render_template('index.html',
                            title='Home',
                            user=user,
-                           test=test)
+                           test=test,
+                           form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -85,3 +117,4 @@ def after_login(resp):
 def logout():
     logout_user()
     return redirect(url_for('index'))
+

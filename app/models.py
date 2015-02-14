@@ -32,7 +32,7 @@ class Test(db.Model):
     description = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    questions = db.relationship('Question', backref='author', lazy='dynamic')
+    questions = db.relationship('Question', backref='test', lazy='dynamic')
 
     def __repr__(self):
         return '<Test %r>' % (self.title)
